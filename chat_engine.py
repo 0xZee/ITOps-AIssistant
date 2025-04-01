@@ -1,4 +1,5 @@
-from langchain_groq import ChatGroq
+#from langchain_groq import ChatGroq
+from langchain_ollama import ChatOllama
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph import START, MessagesState, StateGraph
 from langchain_core.messages import SystemMessage
@@ -11,11 +12,8 @@ class ChatBot:
         self.app = self._setup_workflow()
 
     def _setup_llm(self):
-        return ChatGroq(
-            temperature=0.1,
-            groq_api_key=self.groq_api_key,
-            model_name=self.model_name
-        )
+        #return ChatGroq(temperature=0.1, groq_api_key=self.groq_api_key, model_name=self.model_name)
+        retrun ChatOllama(model="mistral:latest", base_url='http://127.0.0.1:11434',)
 
     def _setup_workflow(self, system_prompt="You are a helpful IT and CloudOPS assistant. Respond in French."):
         workflow = StateGraph(state_schema=MessagesState)
